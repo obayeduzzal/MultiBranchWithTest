@@ -47,12 +47,12 @@ pipeline{
                 bat 'dotnet test --collect:"XPlat Code Coverage"'
             }
         }
-		stage('Test Report Generation'){
-			steps{
-				echo 'Generating Test Report'
-				bat 'reportgenerator -reports:./MutliBranchWithUnit.Test/TestResults/{guid}/coverage.cobertura.xml -targetdir:./MutliBranchWithUnit.Test/Reports'
-			}
-		}
+		//stage('Test Report Generation'){
+			//steps{
+				//echo 'Generating Test Report'
+				//bat 'reportgenerator -reports:./MutliBranchWithUnit.Test/TestResults/{guid}/coverage.cobertura.xml -targetdir:./MutliBranchWithUnit.Test/Reports'
+			//}
+		//}
         stage('UAT Publish'){
             when{
                 branch 'master'
@@ -98,6 +98,9 @@ pipeline{
         }
     }
     post{
+		always {
+            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+        }
         success {
             echo 'Job Succeded'
             emailext(
