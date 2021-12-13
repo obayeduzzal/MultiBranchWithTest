@@ -81,7 +81,8 @@ pipeline{
                 stage('Previous Build Backup'){
                     steps{
                         echo 'Taking Prevoius Build Backup'
-                        bat 'powershell Compress-Archive C:\\CICD\\Deployment\\Pipeline C:\\CICD\\Archive\\ABC_Build_${env.BUILD_NUMBER}.zip'
+						bat 'if exist "C:\\CICD\\Archive\\ABC.zip" del /q /s "C:\\CICD\\Archive\\ABC.zip"'
+                        bat 'powershell Compress-Archive C:\\CICD\\Deployment\\Pipeline C:\\CICD\\Archive\\ABC_Build.zip'
                     }
                 }
                 stage('Previous Database Backup'){
