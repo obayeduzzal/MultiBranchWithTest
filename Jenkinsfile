@@ -22,9 +22,6 @@ pipeline{
         }
         stage('Restore'){
             steps{
-                //options{
-                    //timeout(time: 1, unit: 'HOURS')
-                //}
                 echo 'Restoring Missing Packages'
                 bat 'dotnet restore'
             }
@@ -43,16 +40,26 @@ pipeline{
         }
         stage('Unit Test'){
             steps{
-                echo 'Running Unit Test'
-                bat 'dotnet test --collect:"XPlat Code Coverage"'
+                parallel {
+                    stage('Generate HTML Report'){
+                        steps{
+                            echo 'Printing'
+                        }
+                    }
+                    stage('Generate Cobertura Report'){
+                        steps{
+                            echo 'Running Unit Test'
+                            bat 'dotnet test --collect:"XPlat Code Coverage"'
+                        }
+                    }
+                    stage('Generate Report Using Other Report'){
+                        steps{
+                            echo 'Printing'
+                        }
+                    }
+                }
             }
         }
-		//stage('Test Report Generation'){
-			//steps{
-				//echo 'Generating Test Report'
-				//bat 'reportgenerator -reports:./MutliBranchWithUnit.Test/TestResults/{guid}/coverage.cobertura.xml -targetdir:./MutliBranchWithUnit.Test/Reports'
-			//}
-		//}
         stage('UAT Publish'){
             when{
                 branch 'master'
@@ -71,14 +78,38 @@ pipeline{
                 bat 'dotnet publish -c release'
             }
         }
-        //stage('DB Migration'){
-           // steps{
-                //echo 'Migrating Database'
-                //bat 'cd MultiBranchWithTest.App && dotnet ef database update'
-				//script { flag = true }
-            //}
-        //}
-        stage('Delete Previous'){
+        stage('Taking Backup'){
+            steps{
+                parallel {
+                    stage('Previous Build Backup'){
+                        steps{
+                            echo 'Taking Prevoius Build Backup'
+                            bat 'powershell Compress-Archive C:\\CICD\\Deployment\\Pipeline C:\\CICD\\Archive\\ABC_Build_${env.BUILD_NUMBER}.zip'
+                        }
+                    }
+                    stage('Previous Database Backup'){
+                        steps{
+                            echo 'Taking Previous Database Backup'
+                        }
+                    }
+                }
+            }
+        }
+        stage('DB Migration'){
+            steps{
+                echo 'Migrating Datatbase'
+                script{
+                    try{
+                        bat 'cd MultiBranchWithTest.App && dotnet ef database update'
+                        flag = true
+                    } catch(error){
+                        echo 'Database Migration Failed. Moving To Next Stage'
+                        currentBuild.result = 'SUCCESS'
+                    }
+                }
+            }
+        }
+        stage('Delete Previous Build'){
 			when{
 				expression { flag == true }
 			}
@@ -86,12 +117,28 @@ pipeline{
                 bat 'rmdir /s /q "C:\\CICD\\Deployment\\MultiBranchTest"'
             }
         }
-        stage('copy'){
+        stage('Deploy Artifacts'){
 			when{
 				expression { flag == true }
 			}
             steps{
                 bat'robocopy C:\\JenkinsData\\MultiBrnachTest\\master\\CoreWithUnit.Api\\bin\\Release\\net5.0\\publish C:\\CICD\\Deployment\\MultiBranchTest /e & EXIT /B 0'
+            }
+        }
+        stage('Health Check'){
+            steps{
+                parallel {
+                    stage('DB Health Check'){
+                        steps{
+                            echo 'Checking DB Availability'
+                        }
+                    }
+                    stage('Project Health Check'){
+                        steps{
+                            echo 'Cheking Project Availability'
+                        }
+                    }
+                }
             }
         }
     }
