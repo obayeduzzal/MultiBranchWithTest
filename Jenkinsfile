@@ -118,7 +118,7 @@ pipeline{
 				expression { flag == true }
 			}
             steps{
-                bat'robocopy C:\\JenkinsData\\MultiBrnachTest\\master\\CoreWithUnit.Api\\bin\\Release\\net5.0\\publish C:\\CICD\\Deployment\\MultiBranchTest /e & EXIT /B 0'
+                bat'robocopy C:\\JenkinsData\\MultiBrnachWithTest\\master\\MultiBranchWithTest.App\\bin\\Release\\net5.0\\publish C:\\CICD\\Deployment\\MultiBranchTest /e & EXIT /B 0'
             }
         }
         stage('Health Check'){
