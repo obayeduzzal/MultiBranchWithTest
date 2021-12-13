@@ -73,11 +73,9 @@ pipeline{
         }
         stage('DB Migration'){
             steps{
-                dir('${env.WORKSPACE/CoreWithUnit.Api}'){
-                    echo 'Migrating Database'
-                    bat 'dotnet ef database update'
-				    script { flag = true }
-                }
+                echo 'Migrating Database'
+                bat 'cd MultiBranchWithTest.App && dotnet ef database update'
+				script { flag = true }
             }
         }
         stage('Delete Previous'){
