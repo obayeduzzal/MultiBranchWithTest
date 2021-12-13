@@ -111,7 +111,7 @@ pipeline{
 				expression { flag == true }
 			}
             steps{
-                bat 'rmdir /s /q "C:\\CICD\\Deployment\\MultiBranchTest"'
+                bat 'if exist "C:\\CICD\\Deployment\\MultiBranchTest" rmdir /s /q "C:\\CICD\\Deployment\\MultiBranchTest"'
             }
         }
         stage('Deploy Artifacts'){
