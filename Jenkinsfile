@@ -71,13 +71,13 @@ pipeline{
                 bat 'dotnet publish -c release'
             }
         }
-        stage('DB Migration'){
-            steps{
-                echo 'Migrating Database'
-                bat 'cd MultiBranchWithTest.App && dotnet ef database update'
-				script { flag = true }
-            }
-        }
+        //stage('DB Migration'){
+           // steps{
+                //echo 'Migrating Database'
+                //bat 'cd MultiBranchWithTest.App && dotnet ef database update'
+				//script { flag = true }
+            //}
+        //}
         stage('Delete Previous'){
 			when{
 				expression { flag == true }
