@@ -50,7 +50,7 @@ pipeline{
 		stage('Test Report Generation'){
 			steps{
 				echo 'Generating Test Report'
-				bat 'reportgenerator -reports:./MutliBranchWithUnit.Test/TestResults/\*/\*.xml -targetdir:./MutliBranchWithUnit.Test/Reports'
+				bat 'reportgenerator -reports:./MutliBranchWithUnit.Test/TestResults/{guid}/coverage.cobertura.xml -targetdir:./MutliBranchWithUnit.Test/Reports'
 			}
 		}
         stage('UAT Publish'){
