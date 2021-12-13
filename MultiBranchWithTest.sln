@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31829.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiBranchWithTest.App", "MultiBranchWithTest.App\MultiBranchWithTest.App.csproj", "{8358FCEF-8FE9-4D1C-A757-91349F96A22B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutliBranchWithUnit.Test", "MutliBranchWithUnit.Test\MutliBranchWithUnit.Test.csproj", "{450EF26B-877B-490F-9D29-3DBCE65E9469}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8358FCEF-8FE9-4D1C-A757-91349F96A22B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8358FCEF-8FE9-4D1C-A757-91349F96A22B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8358FCEF-8FE9-4D1C-A757-91349F96A22B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8358FCEF-8FE9-4D1C-A757-91349F96A22B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{450EF26B-877B-490F-9D29-3DBCE65E9469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{450EF26B-877B-490F-9D29-3DBCE65E9469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{450EF26B-877B-490F-9D29-3DBCE65E9469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{450EF26B-877B-490F-9D29-3DBCE65E9469}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64EDB3EF-18A0-43AF-B75A-AB207EB80C94}
+	EndGlobalSection
+EndGlobal
