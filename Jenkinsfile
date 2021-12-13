@@ -101,6 +101,7 @@ pipeline{
                     } catch(error){
                         echo 'Database Migration Failed. Moving To Next Stage'
                         currentBuild.result = 'SUCCESS'
+						flag = true
                     }
                 }
             }
